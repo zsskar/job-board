@@ -13,3 +13,11 @@
     @apply bg-gray-900 text-white;
   }
 }
+
+.navbar-highlight {
+  transition: background-color 0.3s ease !important;
+}
+
+.navbar-highlight:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important; /* Light hover effect */
+}
