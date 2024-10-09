@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 interface SidenavProps {
   isOpen: boolean;
@@ -19,38 +19,6 @@ const Sidenav: React.FC<SidenavProps> = ({
 
   const toggleJobTypeMenu = () => setIsJobTypeOpen(!isJobTypeOpen);
   const toggleLocationMenu = () => setIsLocationOpen(!isLocationOpen);
-
-  // Effect to update URL when selected filters change
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    // Clear existing filters
-    params.delete("jobType");
-    params.delete("location");
-
-    // Concatenate selected job types and locations into a single string
-    const uniqueJobTypes = Array.from(
-      new Set(selectedFilters.filter((filter) => jobTypes.includes(filter)))
-    );
-    const uniqueLocations = Array.from(
-      new Set(selectedFilters.filter((filter) => locations.includes(filter)))
-    );
-
-    if (uniqueJobTypes.length > 0) {
-      params.set("jobType", uniqueJobTypes.join(",")); // Join job types with a comma
-    }
-
-    if (uniqueLocations.length > 0) {
-      params.set("location", uniqueLocations.join(",")); // Join locations with a comma
-    }
-
-    // Update the URL without reloading the page
-    window.history.replaceState(
-      {},
-      "",
-      `${window.location.pathname}?${params}`
-    );
-  }, [selectedFilters]);
 
   return (
     <nav
