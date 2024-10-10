@@ -5,7 +5,6 @@ interface HeaderProps {
   isSidebarOpen: boolean; // Prop type for sidebar state
   setIsSidebarOpen: (isOpen: boolean) => void; // Prop type for the setter function
 }
-
 const Header: React.FC<HeaderProps> = ({
   isSidebarOpen,
   setIsSidebarOpen,
