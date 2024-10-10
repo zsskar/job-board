@@ -1,4 +1,5 @@
 import {
+  CloseButton,
   Dialog,
   DialogBackdrop,
   DialogPanel,
@@ -6,21 +7,8 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
+import { CrossIcon, MinusIcon, PlusIcon, XIcon } from "lucide-react";
 
-const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
 const filters = [
   {
     id: "color",
@@ -69,12 +57,12 @@ const FilterSideNav: React.FC<FilterProps> = ({
   setMobileFiltersOpen,
 }: FilterProps) => {
   return (
-    <div className="bg-white">
+    <div className="bg-white" style={{ position: "relative", zIndex: 50 }}>
       <div>
         <Dialog
           open={mobileFiltersOpen}
           onClose={setMobileFiltersOpen}
-          className="relative z-40"
+          className="relative z-50" // Ensure Dialog has a high z-index
         >
           <DialogBackdrop
             transition
@@ -94,24 +82,11 @@ const FilterSideNav: React.FC<FilterProps> = ({
                   className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
                 >
                   <span className="sr-only">Close menu</span>
-                  <div aria-hidden="true" className="h-6 w-6">
-                    X
-                  </div>
+                  <XIcon aria-hidden="true" className="h-6 w-6" />
                 </button>
               </div>
 
               <form className="mt-4 border-t border-gray-200">
-                <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href} className="block px-2 py-3">
-                        {category.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
                 {filters.map((section) => (
                   <Disclosure
                     key={section.id}
@@ -124,18 +99,14 @@ const FilterSideNav: React.FC<FilterProps> = ({
                           {section.name}
                         </span>
                         <span className="ml-6 flex items-center">
-                          <div
+                          <PlusIcon
                             aria-hidden="true"
                             className="h-5 w-5 group-data-[open]:hidden"
-                          >
-                            +
-                          </div>
-                          <div
+                          />
+                          <MinusIcon
                             aria-hidden="true"
                             className="h-5 w-5 [.group:not([data-open])_&]:hidden"
-                          >
-                            -
-                          </div>
+                          />
                         </span>
                       </DisclosureButton>
                     </h3>

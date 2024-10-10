@@ -1,8 +1,9 @@
-import { FilterHorizontalIcon, Sorting02Icon } from "hugeicons-react";
+import { FilterHorizontalIcon } from "hugeicons-react";
 import Layout from "../components/Layout";
 import FilterSideNav from "../components/FilterSideNav";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useState } from "react";
+import { SortAscIcon } from "lucide-react";
 
 const Dashboard: React.FC = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -30,11 +31,15 @@ const Dashboard: React.FC = () => {
                 </span>
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center space-x-2">
+                {/* Menu Button */}
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
-                    <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                      <Sorting02Icon className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" />
+                    <MenuButton className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                      <SortAscIcon
+                        className="h-8 w-5 text-gray-600"
+                        aria-hidden="true"
+                      />
                     </MenuButton>
                   </div>
 
@@ -47,14 +52,11 @@ const Dashboard: React.FC = () => {
                         <MenuItem key={option.name}>
                           <a
                             href={option.href}
-                            className={`
-                            ${
+                            className={`${
                               option.current
                                 ? "font-medium text-gray-900"
                                 : "text-gray-500"
-                            }
-                            block px-4 py-2 text-sm data-[focus]:bg-gray-100
-                          `}
+                            } block px-4 py-2 text-sm data-[focus]:bg-gray-100`}
                           >
                             {option.name}
                           </a>
@@ -63,8 +65,10 @@ const Dashboard: React.FC = () => {
                     </div>
                   </MenuItems>
                 </Menu>
+
+                {/* Filter Button */}
                 <button
-                  className="flex items-center p-2 rounded-md hover:bg-gray-300 transition ml-2"
+                  className="flex items-center p-2 rounded-md hover:bg-gray-300 transition"
                   onClick={() => setMobileFiltersOpen(true)}
                 >
                   <FilterHorizontalIcon
