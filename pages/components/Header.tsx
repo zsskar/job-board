@@ -61,13 +61,6 @@ const Header: React.FC<HeaderProps> = ({
               href="https://flowbite.com"
               className="flex items-center ms-2 md:me-24"
             >
-              <Image
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 me-3"
-                alt="FlowBite Logo"
-                width={32}
-                height={32}
-              />
               <span className="relative flex items-center text-xl font-semibold text-gray-800 sm:text-2xl whitespace-nowrap">
                 <span className="text-blue-600">Job</span>
                 <span className="bg-blue-700 text-white px-2 py-1 ml-2 rounded-lg shadow-lg mr-1">

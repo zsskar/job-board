@@ -1,147 +1,133 @@
-import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import {
+  Briefcase,
+  Building,
+  Home,
+  LogOut,
+  PlusCircle,
+  User,
+} from "lucide-react";
+import { useRouter } from "next/router";
+import React from "react";
 
-interface SidenavProps {
-  isOpen: boolean;
-  selectedFilters: string[];
-  onFilterSelect: (filter: string) => void;
-}
+const Sidenav: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
+  const router = useRouter();
 
-const Sidenav: React.FC<SidenavProps> = ({
-  isOpen,
-  selectedFilters,
-  onFilterSelect,
-}) => {
-  const jobTypes = ["Fulltime", "Contract", "Internship"];
-  const locations = ["Onsite", "Hybrid", "Remote"];
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
 
-  const [isJobTypeOpen, setIsJobTypeOpen] = useState(false);
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
-
-  const toggleJobTypeMenu = () => setIsJobTypeOpen(!isJobTypeOpen);
-  const toggleLocationMenu = () => setIsLocationOpen(!isLocationOpen);
+  const isActive = (path: string) => router.pathname === path;
 
   return (
     <nav
-      className={`fixed top-2 left-0 z-40 w-64 h-screen pt-20 transition-transform duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 sm:translate-x-0`}
+      className={cn(
+        "fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform duration-300 ease-in-out",
+        isOpen ? "translate-x-0" : "-translate-x-full",
+        "bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 sm:translate-x-0"
+      )}
       aria-label="Sidebar"
     >
-      <div className="h-full px-4 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-        {/* Filter Categories Title */}
-        <div className="text-lg font-semibold mb-4 flex items-center">
-          <span className="mr-2">🔍</span> Filter By
-        </div>
-
-        <hr className="my-2 border-gray-300 dark:border-gray-600" />
-
-        {/* Job Types Section */}
-        <ul className="list-none p-0">
+      <div className="h-full px-6 pb-4 mt-5 overflow-y-auto bg-white dark:bg-gray-800">
+        <ul className="list-none p-0 space-y-4">
           <li>
-            <button
-              type="button"
-              className="flex items-center w-full p-3 text-left text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              onClick={toggleJobTypeMenu}
-              aria-controls="job-type-dropdown"
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center w-full text-left px-4 py-3 rounded-lg",
+                isActive("/dashboard")
+                  ? "bg-blue-200  dark:bg-gray-700"
+                  : "text-gray-900 dark:text-white",
+                "hover:bg-blue-300 dark:hover:bg-gray-700"
+              )}
+              onClick={() => handleNavigation("/dashboard")}
             >
-              <span className="flex-1 font-medium">Job Type</span>
-              <svg
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  isJobTypeOpen ? "transform rotate-180" : ""
-                }`}
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 4 4 4-4"
-                />
-              </svg>
-            </button>
-            <ul
-              id="job-type-dropdown"
-              className={`py-2 ${isJobTypeOpen ? "" : "hidden"}`}
-            >
-              {jobTypes.map((jobType) => (
-                <li key={jobType} className="py-1">
-                  <a
-                    href="#"
-                    className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
-                      selectedFilters.includes(jobType)
-                        ? "bg-blue-500 text-white"
-                        : "dark:bg-gray-700"
-                    }`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onFilterSelect(jobType);
-                    }}
-                  >
-                    {jobType}
-                  </a>
-                </li>
-              ))}
-            </ul>
+              <Home className="w-5 h-5 mr-3 flex-shrink-0" />
+              <span className="text-base font-medium flex-grow">Home</span>
+            </Button>
           </li>
-        </ul>
-
-        <hr className="my-2 border-gray-300 dark:border-gray-600" />
-
-        {/* Locations Section */}
-        <ul className="list-none p-0">
           <li>
-            <button
-              type="button"
-              className="flex items-center w-full p-3 text-left text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              onClick={toggleLocationMenu}
-              aria-controls="location-dropdown"
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center w-full text-left px-4 py-3 rounded-lg",
+                isActive("/dashboard/companies")
+                  ? "bg-blue-200  dark:bg-gray-700"
+                  : "text-gray-900 dark:text-white",
+                "hover:bg-blue-300 dark:hover:bg-gray-700"
+              )}
+              onClick={() => handleNavigation("/dashboard/companies")}
             >
-              <span className="flex-1 font-medium">Location</span>
-              <svg
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  isLocationOpen ? "transform rotate-180" : ""
-                }`}
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 4 4 4-4"
-                />
-              </svg>
-            </button>
-            <ul
-              id="location-dropdown"
-              className={`py-2 ${isLocationOpen ? "" : "hidden"}`}
+              <Building className="w-5 h-5 mr-3 flex-shrink-0" />
+              <span className="text-base font-medium flex-grow">Companies</span>
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center w-full text-left px-4 py-3 rounded-lg",
+                isActive("/dashboard/jobs")
+                  ? "bg-blue-200  dark:bg-gray-700"
+                  : "text-gray-900 dark:text-white",
+                "hover:bg-blue-300 dark:hover:bg-gray-700"
+              )}
+              onClick={() => handleNavigation("/dashboard/jobs")}
             >
-              {locations.map((location) => (
-                <li key={location} className="py-1">
-                  <a
-                    href="#"
-                    className={`flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${
-                      selectedFilters.includes(location)
-                        ? "bg-blue-500 text-white"
-                        : "dark:bg-gray-700"
-                    }`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onFilterSelect(location);
-                    }}
-                  >
-                    {location}
-                  </a>
-                </li>
-              ))}
-            </ul>
+              <Briefcase className="w-5 h-5 mr-3 flex-shrink-0" />
+              <span className="text-base font-medium flex-grow">Jobs</span>
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center w-full text-left px-4 py-3 rounded-lg",
+                isActive("/dashboard/createjob")
+                  ? "bg-blue-200  dark:bg-gray-700"
+                  : "text-gray-900 dark:text-white",
+                "hover:bg-blue-300 dark:hover:bg-gray-700"
+              )}
+              onClick={() => handleNavigation("/dashboard/createjob")}
+            >
+              <PlusCircle className="w-5 h-5 mr-3 flex-shrink-0" />
+              <span className="text-base font-medium flex-grow">
+                Create Job
+              </span>
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center w-full text-left px-4 py-3 rounded-lg",
+                isActive("/dashboard/profile")
+                  ? "bg-blue-200  dark:bg-gray-700"
+                  : "text-gray-900 dark:text-white",
+                "hover:bg-blue-300 dark:hover:bg-gray-700"
+              )}
+              onClick={() => handleNavigation("/dashboard/profile")}
+            >
+              <User className="w-5 h-5 mr-3 flex-shrink-0" />
+              <span className="text-base font-medium flex-grow">Profile</span>
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center w-full text-left px-4 py-3 rounded-lg",
+                isActive("/logout")
+                  ? "bg-blue-200  dark:bg-gray-700"
+                  : "text-gray-900 dark:text-white",
+                "hover:bg-blue-300 dark:hover:bg-gray-700"
+              )}
+              onClick={() => handleNavigation("/logout")}
+            >
+              <LogOut className="w-5 h-5 mr-3 flex-shrink-0" />
+              <span className="text-base font-medium flex-grow">Logout</span>
+            </Button>
           </li>
         </ul>
       </div>

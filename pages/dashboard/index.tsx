@@ -35,9 +35,9 @@ const Dashboard: React.FC = () => {
                 {/* Menu Button */}
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
-                    <MenuButton className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                    <MenuButton className="hover:bg-gray-300 inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900">
                       <SortAscIcon
-                        className="h-8 w-5 text-gray-600"
+                        className="hover:bg-gray-300 transition h-8 w-5 text-gray-600"
                         aria-hidden="true"
                       />
                     </MenuButton>
