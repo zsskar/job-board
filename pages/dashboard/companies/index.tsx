@@ -3,9 +3,9 @@ import React from "react";
 
 export default function Companies() {
   return (
-    <Layout>
-      <div className="p-4 sm:ml-64" style={{ marginTop: 100 }}>
-        <div>All Companies will be listed here</div>
+    <Layout scrollable>
+      <div className="space-y-2">
+        <h1>All Companies will be listed here</h1>
       </div>
     </Layout>
   );

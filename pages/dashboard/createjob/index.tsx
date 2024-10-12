@@ -3,9 +3,9 @@ import React from "react";
 
 export default function CreateJob() {
   return (
-    <Layout>
-      <div className="p-4 sm:ml-64" style={{ marginTop: 100 }}>
-        <div>Here you will create the job</div>
+    <Layout scrollable>
+      <div className="space-y-2">
+        <h1>Here you will create the job</h1>
       </div>
     </Layout>
   );

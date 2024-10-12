@@ -1,5 +1,4 @@
 import {
-  CloseButton,
   Dialog,
   DialogBackdrop,
   DialogPanel,
@@ -7,7 +6,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import { CrossIcon, MinusIcon, PlusIcon, XIcon } from "lucide-react";
+import { MinusIcon, PlusIcon, XIcon } from "lucide-react";
 
 const filters = [
   {
