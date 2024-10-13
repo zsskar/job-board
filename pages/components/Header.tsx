@@ -12,18 +12,16 @@ export default function Header() {
           <MobileSidebar />
         </div>
         <div className="mr-auto">
-          <a
-            href="https://flowbite.com"
-            className="flex items-center ms-2 md:me-24"
-          >
-            <span className="relative flex items-center text-xl font-semibold text-gray-800 sm:text-2xl whitespace-nowrap">
-              <span className="text-blue-600">Job</span>
-              <span className="bg-blue-700 text-white px-2 py-1 ml-2 rounded-lg shadow-lg mr-1">
+          <a className="flex items-center ms-2 md:me-24">
+            <span className="relative flex items-center text-xl font-semibold text-gray-800 dark:text-gray-200 sm:text-2xl whitespace-nowrap">
+              <span className="text-blue-600 dark:text-white">Job</span>
+              <span className="bg-blue-700 dark:bg-blue-500 text-white dark:text-gray-100 px-2 py-1 ml-2 rounded-lg shadow-lg mr-1">
                 Board
               </span>
             </span>
           </a>
         </div>
+
         <div className="flex items-center gap-2">
           <UserNav />
           <ThemeToggle />

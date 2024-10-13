@@ -1,9 +1,17 @@
+// ThemeProvider.tsx
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { type ThemeProviderProps } from "next-themes/dist/types";
+import { ReactNode } from "react";
 
-export default function ThemeProvider({
-  children,
-  ...props
-}: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
-}
+type ThemeProviderProps = {
+  children: ReactNode;
+};
+
+const ThemeProvider = ({ children }: ThemeProviderProps) => {
+  return (
+    <NextThemesProvider attribute="class" defaultTheme="system">
+      {children}
+    </NextThemesProvider>
+  );
+};
+
+export default ThemeProvider;

@@ -15,7 +15,6 @@ import {
   Home,
   Image,
   Laptop,
-  LayoutDashboardIcon,
   Loader2,
   LogIn,
   LogOut,
