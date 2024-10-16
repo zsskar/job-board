@@ -47,7 +47,6 @@ const Jobs = () => {
             backgroundColor: "white",
           }}
         >
-          {/* Left Side - Tabs Trigger */}
           <TabsTrigger
             style={{ height: "50px", width: "200px" }}
             value="jobs"
@@ -56,7 +55,6 @@ const Jobs = () => {
             Recommended Jobs
           </TabsTrigger>
 
-          {/* Right Side - Sort Icon and Sort Options */}
           <div className="flex items-center space-x-4">
             <Popover>
               <PopoverTrigger asChild>
@@ -93,7 +91,6 @@ const Jobs = () => {
               </PopoverContent>
             </Popover>
 
-            {/* Filter Icon Button */}
             <button
               className="flex items-center justify-center h-10 w-10 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition duration-200"
               onClick={handleFilters}
