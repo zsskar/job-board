@@ -79,6 +79,38 @@
   }
 }
 
-body {
-  overflow: hidden;
+/* Apply smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Light background */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, grey, grey); /* Premium gradient effect */
+  border-radius: 10px;
+  border: 2px solid #f0f0f0; /* Creates a gap between track and thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, grey); /* Invert gradient on hover */
+}
+
+/* Firefox scrollbar style */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: grey #f0f0f0; /* Scrollbar thumb and track */
+}
+
+/* Smooth transition */
+::-webkit-scrollbar-thumb {
+  transition: background 0.3s ease, border-radius 0.3s ease;
 }

@@ -47,20 +47,20 @@ const filters = [
 ];
 
 interface FilterProps {
-  mobileFiltersOpen: boolean;
-  setMobileFiltersOpen: (isOpen: boolean) => void;
+  openFilter: boolean;
+  setOpenFilter: (isOpen: boolean) => void;
 }
 
 const FilterSideNav: React.FC<FilterProps> = ({
-  mobileFiltersOpen,
-  setMobileFiltersOpen,
+  openFilter,
+  setOpenFilter,
 }: FilterProps) => {
   return (
     <div className="bg-white" style={{ position: "relative", zIndex: 50 }}>
       <div>
         <Dialog
-          open={mobileFiltersOpen}
-          onClose={setMobileFiltersOpen}
+          open={openFilter}
+          onClose={setOpenFilter}
           className="relative z-50" // Ensure Dialog has a high z-index
         >
           <DialogBackdrop
@@ -77,7 +77,7 @@ const FilterSideNav: React.FC<FilterProps> = ({
                 <h2 className="text-lg font-medium text-gray-900">Filters</h2>
                 <button
                   type="button"
-                  onClick={() => setMobileFiltersOpen(false)}
+                  onClick={() => setOpenFilter(false)}
                   className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
                 >
                   <span className="sr-only">Close menu</span>

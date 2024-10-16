@@ -16,63 +16,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Layout from "@/pages/components/Layout";
+import { jobs } from "@/constants/data";
+import FilterSideNav from "@/pages/components/FilterSideNav";
 
 const Jobs = () => {
-  const jobs = [
-    {
-      date: "20 May, 2023",
-      company: "Amazon",
-      role: "Senior UI/UX Designer",
-      price: "$250/hr",
-      location: "Remote",
-      tags: ["Part time", "Senior level", "Distant", "Project work"],
-      color: "bg-orange-100",
-      companyLogo:
-        "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", // Amazon logo URL
-    },
-    {
-      date: "4 Feb, 2023",
-      company: "Google",
-      role: "Junior UI/UX Designer",
-      price: "$150/hr",
-      location: "Remote",
-      tags: ["Full time", "Junior level", "Distant", "Flexible Schedule"],
-      color: "bg-teal-100",
-      companyLogo:
-        "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg", // Google logo URL
-    },
-    {
-      date: "20 May, 2023",
-      company: "Amazon",
-      role: "Senior UI/UX Designer",
-      price: "$250/hr",
-      location: "Remote",
-      tags: ["Part time", "Senior level", "Distant", "Project work"],
-      color: "bg-orange-100",
-      companyLogo:
-        "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", // Amazon logo URL
-    },
-    {
-      date: "4 Feb, 2023",
-      company: "Google",
-      role: "Junior UI/UX Designer",
-      price: "$150/hr",
-      location: "Remote",
-      tags: ["Full time", "Junior level", "Distant", "Flexible Schedule"],
-      color: "bg-teal-100",
-      companyLogo:
-        "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg", // Google logo URL
-    },
-  ];
-
   const [sortOrder, setSortOrder] = useState<string>("");
+  const [filterMenuOpen, setFilterMenuOpen] = useState<boolean>(false);
 
   const handleSort = (order: string) => {
     setSortOrder(order);
   };
 
+  const handleFilters = () => {
+    setFilterMenuOpen(!filterMenuOpen);
+  };
+
   return (
     <Layout scrollable>
+      <FilterSideNav
+        openFilter={filterMenuOpen}
+        setOpenFilter={setFilterMenuOpen}
+      />
       <Tabs defaultValue="jobs" className="space-y-4">
         <TabsList
           style={{
@@ -130,7 +94,10 @@ const Jobs = () => {
             </Popover>
 
             {/* Filter Icon Button */}
-            <button className="flex items-center justify-center h-10 w-10 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition duration-200">
+            <button
+              className="flex items-center justify-center h-10 w-10 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition duration-200"
+              onClick={handleFilters}
+            >
               <FilterIcon className="text-gray-600  dark:text-white" />
             </button>
           </div>
