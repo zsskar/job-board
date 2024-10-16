@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Layout from "@/pages/components/Layout";
+import Layout from "@/pages/components/layout";
 import React from "react";
 
 export default function Profile() {

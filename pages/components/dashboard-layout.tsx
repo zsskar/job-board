@@ -1,5 +1,5 @@
-import Sidebar from "./Sidenav";
 import Header from "./Header";
+import Sidebar from "./Sidenav";
 
 export default function DashboardLayout({
   children,

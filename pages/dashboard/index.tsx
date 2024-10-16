@@ -85,7 +85,7 @@
 // export default Dashboard;
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Layout from "../components/Layout";
+import Layout from "../components/layout";
 import {
   Card,
   CardContent,

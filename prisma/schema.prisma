@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,11 +8,78 @@ datasource db {
 }
 
 model User {
-  id             String  @id @default(uuid())
-  email          String  @unique
-  name           String?
+  id             String   @id @default(cuid())    // Unique ID for each user
+  name           String?                           // User's name from OAuth
+  email          String   @unique                  // User's email from OAuth
   profilePicture String?
-  role           String?
+  role           Role                              // Whether user is 'USER', 'RECRUITER', 'ADMIN'
+  companyId      String?                           // Nullable: For recruiters only
+  company        Company?  @relation(fields: [companyId], references: [id]) // Relationship to Company (recruiter only)
+  jobs           Job[]                             // One recruiter can post many jobs
+  applications   Application[]                     // One user can have many applications
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Company {
+  id             String   @id @default(cuid())    // Unique ID for each company
+  name           String                            // Company name
+  email          String?                           // Company email
+  picture        String?                           // Company logo or picture
+  recruiters     User[]                            // One company can have many recruiters
+  jobs           Job[]                             // One company can post many jobs
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+model Job {
+  id            String   @id @default(cuid())    // Unique ID for each job
+  title         String                              // Job title
+  description   String                              // Job description
+  location      String                              // Job location (optional)
+  companyId     String                              // Foreign key to company
+  company       Company   @relation(fields: [companyId], references: [id]) // Relationship to Company
+  recruiterId   String                              // Foreign key to recruiter (user)
+  recruiter     User     @relation(fields: [recruiterId], references: [id]) // Relationship to User
+  createdAt     DateTime @default(now())            // Job post creation date
+  updatedAt     DateTime @updatedAt                 // Automatically updated on modification
+
+  applications  Application[]                      // One job can have many applications
+}
+
+model Application {
+  id          String   @id @default(cuid())      // Unique ID for each application
+  userId      String                              // Foreign key to user who applied
+  user        User     @relation(fields: [userId], references: [id]) // Relationship to User
+  jobId       String                              // Foreign key to job applied for
+  job         Job      @relation(fields: [jobId], references: [id])  // Relationship to Job
+  resume      String?                             // Link to the user's resume (optional)
+  status      ApplicationStatus @default(APPLIED) // Application status
+  createdAt   DateTime @default(now())            // Application creation date
+
+  @@unique([userId, jobId])                       // User can only apply once per job
+}
+
+enum ApplicationStatus {
+  APPLIED
+  IN_REVIEW
+  INTERVIEW_SCHEDULED
+  INTERVIEW_COMPLETED
+  OFFERED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+  ON_HOLD
+  DECLINED
+}
+
+enum Role {
+  USER
+  RECRUITER
+  ADMIN
+}
+
+
+

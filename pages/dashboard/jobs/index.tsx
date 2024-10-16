@@ -15,9 +15,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import Layout from "@/pages/components/Layout";
 import { jobs } from "@/constants/data";
-import FilterSideNav from "@/pages/components/FilterSideNav";
+import FilterSideNav from "@/pages/components/filter_side_nav";
+import Layout from "@/pages/components/Layout";
 
 const Jobs = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
