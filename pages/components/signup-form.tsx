@@ -5,7 +5,13 @@ import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 import { SignUpLayout } from "./sign_up_form_layout";
 
-export default function SignUpForm({ who }: { who: string }) {
+export default function SignUpForm({
+  who,
+  handleSignUp,
+}: {
+  who: string;
+  handleSignUp: () => void;
+}) {
   return (
     <SignUpLayout>
       <div className="w-full max-w-md px-8 py-10 bg-white shadow-2xl rounded-2xl transition-transform duration-300 transform hover:scale-105">
@@ -46,9 +52,12 @@ export default function SignUpForm({ who }: { who: string }) {
         </div>
 
         {/* GitHub OAuth Button */}
-        <Button className="w-full bg-gray-100 text-black border border-gray-300 py-3 rounded-lg flex justify-center items-center hover:bg-gray-200 transition-all duration-300">
+        <Button
+          onClick={handleSignUp}
+          className="w-full bg-gray-100 text-black border border-gray-300 py-3 rounded-lg flex justify-center items-center hover:bg-gray-200 transition-all duration-300"
+        >
           <GithubIcon className="mr-2 h-5 w-5" />
-          GitHub
+          Google
         </Button>
 
         {/* Terms and Privacy */}

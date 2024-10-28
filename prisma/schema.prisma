@@ -10,17 +10,47 @@ datasource db {
 model User {
   id             String   @id @default(cuid())    // Unique ID for each user
   name           String?                           // User's name from OAuth
-  email          String   @unique                  // User's email from OAuth
-  profilePicture String?
-  role           Role                              // Whether user is 'USER', 'RECRUITER', 'ADMIN'
+  email         String   @unique @db.VarChar(255)
+  emailVerified DateTime?
+  image         String?  @db.VarChar(255)
+  // OAuth related fields
+  accounts      Account[]
+  sessions      Session[]
+  role           Role?                        // Whether user is 'USER', 'RECRUITER', 'ADMIN'
   companyId      String?                           // Nullable: For recruiters only
   company        Company?  @relation(fields: [companyId], references: [id]) // Relationship to Company (recruiter only)
   jobs           Job[]                             // One recruiter can post many jobs
   applications   Application[]                     // One user can have many applications
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+}
 
-  @@map("users")
+model Account {
+  id               String   @id @default(cuid())
+  userId           String
+  type             String
+  provider         String
+  providerAccountId String
+  refresh_token    String?  @db.Text
+  access_token     String?  @db.Text
+  expires_at       Int?
+  token_type       String?
+  scope            String?
+  id_token         String?  @db.Text // Modify this line
+  session_state    String?
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Company {
