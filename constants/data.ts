@@ -6,36 +6,42 @@ export const navItems: NavItem[] = [
     href: "/dashboard",
     icon: "dashboard",
     label: "Dashboard",
+    access: "ANY",
   },
   {
     title: "Jobs",
     href: "/dashboard/jobs",
     icon: "jobs",
     label: "jobs",
+    access: "USER",
   },
   {
     title: "Companies",
     href: "/dashboard/companies",
     icon: "building",
     label: "companies",
+    access: "USER",
   },
   {
     title: "Create Job",
     href: "/dashboard/createjob",
     icon: "createjob",
     label: "create job",
+    access: "RECRUITER",
   },
   {
     title: "Profile",
     href: "/dashboard/profile",
     icon: "profile",
     label: "profile",
+    access: "ANY",
   },
   {
     title: "Logout",
     href: "/dashboard/logout",
     icon: "logout",
     label: "logout",
+    access: "ANY",
   },
 ];
 

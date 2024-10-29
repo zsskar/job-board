@@ -9,44 +9,65 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/router";
+import { toast } from "sonner";
+import { signOut, useSession } from "next-auth/react";
+import Spinner from "./spinner";
 
 export function UserNav() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const handleSignout = () => {
+    signOut().then(() => {
+      router.push("/signup").then(() => {
+        toast("Logout successfully.");
+      });
+    });
+  };
+
   return (
     <DropdownMenu>
+      {status == "loading" && <Spinner />}
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar
-            className="h-8 w-8"
-            style={{
-              borderRadius: "50%",
-              border: "hsl(20deg 100% 75.3%) 2px solid",
-            }}
-          >
-            <AvatarImage src={""} alt={""} />
-            <AvatarFallback>{""}</AvatarFallback>
-          </Avatar>
-        </Button>
+        {status == "authenticated" ? (
+          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            <Avatar
+              className="h-8 w-8"
+              style={{
+                borderRadius: "50%",
+                border: "hsl(20deg 100% 75.3%) 2px solid",
+              }}
+            >
+              <AvatarImage
+                src={session?.user?.image || ""}
+                alt={session?.user?.id}
+              />
+              <AvatarFallback>{""}</AvatarFallback>
+            </Avatar>
+          </Button>
+        ) : null}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{"Name"}</p>
+            <p className="text-sm font-medium leading-none">
+              {session?.user.name}
+            </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {"session.user?.email"}
+              {session && session.user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>New Team</DropdownMenuItem>
+          {/* <DropdownMenuItem>Billing</DropdownMenuItem>
+          <DropdownMenuItem>Settings</DropdownMenuItem> */}
+          {/* <DropdownMenuItem>New Team</DropdownMenuItem> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => console.log("")}>
-          Log out
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSignout}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

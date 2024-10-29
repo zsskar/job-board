@@ -4,6 +4,8 @@ import React from "react";
 import { DashboardNav } from "./dashboard-nav";
 import { navItems } from "@/constants/data";
 import { useSidebar } from "@/hooks/useSidebar";
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
 
 type SidebarProps = {
   className?: string;
@@ -11,10 +13,18 @@ type SidebarProps = {
 
 export default function Sidebar({ className }: SidebarProps) {
   const { isMinimized, toggle } = useSidebar();
+  const { data: session, status } = useSession();
 
   const handleToggle = () => {
     toggle();
   };
+
+  const getFilteredNavItems =
+    session?.user.role === Role.USER
+      ? navItems.filter((item) => item.access != "RECRUITER")
+      : session?.user.role === Role.RECRUITER
+      ? navItems.filter((item) => item.access != "USER")
+      : navItems;
 
   return (
     <aside
@@ -37,7 +47,7 @@ export default function Sidebar({ className }: SidebarProps) {
       <div className="space-y-4 py-0">
         <div className="px-3 py-2">
           <div className="mt-3 space-y-1">
-            <DashboardNav items={navItems} />
+            <DashboardNav items={getFilteredNavItems} />
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export default function JobSeeker() {
   const router = useRouter();
-  const { data: session, status } = useSession(); // Use status to check loading state
+  const { data: session, status } = useSession();
   useEffect(() => {
     if (session && session.user) {
       router.push("/dashboard");
