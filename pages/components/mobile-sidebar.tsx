@@ -3,11 +3,21 @@ import { MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { DashboardNav } from "./dashboard-nav";
 import { navItems } from "@/constants/data";
+import { Session } from "next-auth";
+import { Role } from "@prisma/client";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function MobileSidebar() {
+export function MobileSidebar({ session }: { session: Session | null }) {
   const [open, setOpen] = useState(false);
+
+  const getFilteredNavItems =
+    session?.user.role === Role.USER
+      ? navItems.filter((item) => item.access != "RECRUITER")
+      : session?.user.role === Role.RECRUITER
+      ? navItems.filter((item) => item.access != "USER")
+      : navItems;
+
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -22,7 +32,7 @@ export function MobileSidebar() {
               </h2>
               <div className="space-y-1">
                 <DashboardNav
-                  items={navItems}
+                  items={getFilteredNavItems}
                   isMobileNav={true}
                   setOpen={setOpen}
                 />

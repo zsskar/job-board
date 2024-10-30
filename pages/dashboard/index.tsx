@@ -93,10 +93,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { getSession } from "next-auth/react";
+import { Session } from "next-auth";
 
-export default function Dashboard() {
+export default function Dashboard({ session }: { session: Session }) {
   return (
-    <Layout scrollable>
+    <Layout scrollable session={session}>
       <div className="space-y-5">
         <div className="flex items-center justify-between space-y-5">
           <h2 className="text-2xl font-bold tracking-tight">
@@ -246,3 +249,23 @@ export default function Dashboard() {
     </Layout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const session = await getSession(context);
+  console.log("Session in getServerSideProps:", session?.user);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};

@@ -11,42 +11,38 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
-import { signOut, useSession } from "next-auth/react";
-import Spinner from "./spinner";
+import { signOut } from "next-auth/react";
+import { Session } from "next-auth";
 
-export function UserNav() {
-  const { data: session, status } = useSession();
+export function UserNav({ session }: { session: Session | null }) {
   const router = useRouter();
 
   const handleSignout = () => {
     signOut().then(() => {
-      router.push("/signup").then(() => {
-        toast("Logout successfully.");
+      toast("Logout successfully.", {
+        onAutoClose: () => router.push("/login"),
       });
     });
   };
 
   return (
     <DropdownMenu>
-      {status == "loading" && <Spinner />}
       <DropdownMenuTrigger asChild>
-        {status == "authenticated" ? (
-          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-            <Avatar
-              className="h-8 w-8"
-              style={{
-                borderRadius: "50%",
-                border: "hsl(20deg 100% 75.3%) 2px solid",
-              }}
-            >
-              <AvatarImage
-                src={session?.user?.image || ""}
-                alt={session?.user?.id}
-              />
-              <AvatarFallback>{""}</AvatarFallback>
-            </Avatar>
-          </Button>
-        ) : null}
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar
+            className="h-8 w-8"
+            style={{
+              borderRadius: "50%",
+              border: "hsl(20deg 100% 75.3%) 2px solid",
+            }}
+          >
+            <AvatarImage
+              src={(session && session.user.image) || ""}
+              alt={session?.user?.id}
+            />
+            <AvatarFallback></AvatarFallback>
+          </Avatar>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">

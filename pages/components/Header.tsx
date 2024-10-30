@@ -3,13 +3,14 @@ import React from "react";
 import { MobileSidebar } from "./mobile-sidebar";
 import { UserNav } from "./user-nav";
 import ThemeToggle from "./ThemeToggle/theme-toggle";
+import { Session } from "next-auth";
 
-export default function Header() {
+export default function Header({ session }: { session: Session | null }) {
   return (
     <header className="sticky inset-x-0 top-0 w-full">
       <nav className="flex items-center justify-between px-4 py-2 md:justify-end">
         <div className={cn("block lg:!hidden")}>
-          <MobileSidebar />
+          <MobileSidebar session={session} />
         </div>
         <div className="mr-auto">
           <a className="flex items-center ms-2 md:me-24">
@@ -23,7 +24,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <UserNav />
+          <UserNav session={session} />
           <ThemeToggle />
         </div>
       </nav>

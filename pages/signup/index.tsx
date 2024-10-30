@@ -10,7 +10,7 @@ type who = "jobSeeker" | "recruiter";
 
 const SignUpOptions = () => {
   const router = useRouter();
-  const { data: session, status } = useSession(); // Use status to check loading state
+  const { data: session, status } = useSession();
   useEffect(() => {
     if (session && session.user) {
       router.push("/dashboard");
@@ -74,7 +74,7 @@ const SignUpOptions = () => {
                 </div>
                 <div className="flex-grow">
                   <h2 className="text-lg font-semibold">
-                    I’m looking for a job
+                    I m looking for a job
                   </h2>
                   <p className="text-gray-600">
                     Find remote jobs at top companies

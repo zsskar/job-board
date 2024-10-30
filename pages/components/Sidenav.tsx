@@ -4,16 +4,16 @@ import React from "react";
 import { DashboardNav } from "./dashboard-nav";
 import { navItems } from "@/constants/data";
 import { useSidebar } from "@/hooks/useSidebar";
-import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
+import { Session } from "next-auth";
 
 type SidebarProps = {
   className?: string;
+  session: Session | null;
 };
 
-export default function Sidebar({ className }: SidebarProps) {
+export default function Sidebar({ className, session }: SidebarProps) {
   const { isMinimized, toggle } = useSidebar();
-  const { data: session, status } = useSession();
 
   const handleToggle = () => {
     toggle();

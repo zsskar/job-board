@@ -90,7 +90,7 @@ const authOptions: NextAuthOptions = {
         const dbUser = await prisma.user.findUnique({
           where: { email: session.user.email },
         });
-        console.log("DB User found:", dbUser); // Log the found user
+        // console.log("DB User found:", dbUser); // Log the found user
         session.user.role = dbUser?.role as Role;
       }
       return session;
