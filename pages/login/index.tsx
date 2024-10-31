@@ -1,19 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SignUpLayout } from "../components/sign_up_form_layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { GithubIcon } from "lucide-react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { getSession, signIn } from "next-auth/react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 export default function LoginPage() {
+  const [showMessage, setShowMessage] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.newUser === "true") {
+      setShowMessage(true);
+    }
+  }, [router.query]);
+
   const handleLogin = () => {
     signIn("google", { callbackUrl: "/dashboard" });
   };
   return (
     <SignUpLayout>
-      <div className="w-full max-w-md px-8 py-10 bg-white shadow-2xl rounded-2xl transition-transform duration-300 transform hover:scale-105">
+      <div
+        className={`w-full max-w-md px-8 py-10 bg-white shadow-2xl rounded-2xl transition-transform duration-300 transform ${
+          showMessage ? "" : "hover:scale-105"
+        }`}
+      >
+        {showMessage && (
+          <div className="message bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+            <p>
+              We couldn&apos;t find an account associated with this Google
+              account. Please complete the signup process to continue.
+            </p>
+          </div>
+        )}
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
           Welcome Back, User
         </h2>

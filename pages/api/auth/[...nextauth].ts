@@ -38,62 +38,23 @@ const authOptions: NextAuthOptions = {
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async signIn({ user, account }) {
-      const callbackUrl = account?.callbackUrl;
-      console.log("Callback URL:", callbackUrl); // Log the callback URL
+    async signIn({ user, account, profile }) {
+      // Check if user exists in the database
+      const existingUser = await prisma.user.findUnique({
+        where: { email: user.email || "" },
+      });
 
-      if (typeof callbackUrl === "string") {
-        const url = new URL(callbackUrl);
-        const role = url.searchParams.get("role");
-        console.log("Role from callback URL:", role); // Log the extracted role
-
-        if (typeof user.email === "string") {
-          const existingUser = await prisma.user.findUnique({
-            where: { email: user.email },
-          });
-
-          if (!existingUser) {
-            // Create a new user with role
-            const newUser = await prisma.user.create({
-              data: {
-                name: user.name || null,
-                email: user.email,
-                image: user.image || null,
-                emailVerified: null,
-                role: (role as Role) || Role.USER, // Default to USER if no role is provided
-              },
-            });
-            console.log("New user created:", newUser);
-          } else {
-            // Update user role if needed
-            if (role && (role === Role.USER || role === Role.RECRUITER)) {
-              console.log("Updating user role...");
-              const updatedUser = await prisma.user.update({
-                where: { email: user.email },
-                data: { role: role as Role },
-              });
-              console.log("User updated:", updatedUser);
-            }
-          }
-        } else {
-          console.error("User email is not a valid string:", user.email);
-        }
-      } else {
-        console.error("Invalid callbackUrl:", callbackUrl);
+      if (!existingUser) {
+        // If user doesn't exist, redirect to signup page
+        return "/login?newUser=true";
       }
 
+      // If the user exists, allow sign-in
       return true;
     },
-
-    async session({ session }) {
-      if (session?.user?.email) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: session.user.email },
-        });
-        // console.log("DB User found:", dbUser); // Log the found user
-        session.user.role = dbUser?.role as Role;
-      }
-      return session;
+    async redirect({ url, baseUrl }) {
+      // Redirect to dashboard if user exists
+      return baseUrl + "/dashboard";
     },
   },
   pages: {

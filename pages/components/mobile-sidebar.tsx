@@ -6,7 +6,7 @@ import { navItems } from "@/constants/data";
 import { Session } from "next-auth";
 import { Role } from "@prisma/client";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+// interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function MobileSidebar({ session }: { session: Session | null }) {
   const [open, setOpen] = useState(false);
