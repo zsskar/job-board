@@ -14,7 +14,7 @@ import { toast } from "sonner";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
 
-export function UserNav({ session }: { session: Session | null }) {
+export function UserNav({ session }: { session: Session }) {
   const router = useRouter();
 
   const handleSignout = () => {

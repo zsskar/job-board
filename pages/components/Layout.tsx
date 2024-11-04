@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import DashboardLayout from "./dashboard-layout";
+import DashboardLayout, { getServerSideProps } from "./dashboard-layout";
 import { Session } from "next-auth";
 
 export default function Layout({
@@ -10,7 +10,7 @@ export default function Layout({
 }: {
   children: React.ReactNode;
   scrollable?: boolean;
-  session: Session | null;
+  session: Session;
 }) {
   return (
     <>
@@ -26,3 +26,5 @@ export default function Layout({
     </>
   );
 }
+
+export { getServerSideProps };

@@ -9,7 +9,7 @@ import { Session } from "next-auth";
 
 type SidebarProps = {
   className?: string;
-  session: Session | null;
+  session: Session;
 };
 
 export default function Sidebar({ className, session }: SidebarProps) {

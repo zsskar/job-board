@@ -85,7 +85,6 @@
 // export default Dashboard;
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Layout from "../components/layout";
 import {
   Card,
   CardContent,
@@ -93,9 +92,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { getSession } from "next-auth/react";
 import { Session } from "next-auth";
+import Layout, { getServerSideProps } from "../components/Layout";
 
 export default function Dashboard({ session }: { session: Session }) {
   return (
@@ -250,22 +248,4 @@ export default function Dashboard({ session }: { session: Session }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const session = await getSession(context);
-  console.log("Session in getServerSideProps:", session?.user);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-};
+export { getServerSideProps };

@@ -36,13 +36,13 @@ export const navItems: NavItem[] = [
     label: "profile",
     access: "ANY",
   },
-  {
-    title: "Logout",
-    href: "/dashboard/logout",
-    icon: "logout",
-    label: "logout",
-    access: "ANY",
-  },
+  // {
+  //   title: "Logout",
+  //   href: "/dashboard/logout",
+  //   icon: "logout",
+  //   label: "logout",
+  //   access: "ANY",
+  // },
 ];
 
 export const jobs = [

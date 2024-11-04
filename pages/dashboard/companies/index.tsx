@@ -1,10 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Layout from "@/pages/components/layout";
+import Layout, { getServerSideProps } from "@/pages/components/Layout";
+import { Session } from "next-auth";
 import React from "react";
 
-export default function Companies() {
+export default function Companies({ session }: { session: Session }) {
   return (
-    <Layout scrollable>
+    <Layout scrollable session={session}>
       <div className="space-y-5">
         <Tabs defaultValue="companies" className="space-y-4">
           <TabsList
@@ -30,3 +31,5 @@ export default function Companies() {
     </Layout>
   );
 }
+
+export { getServerSideProps };

@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/popover";
 import { jobs } from "@/constants/data";
 import FilterSideNav from "@/pages/components/filter_side_nav";
-import Layout from "@/pages/components/Layout";
+import Layout, { getServerSideProps } from "@/pages/components/Layout";
+import { Session } from "next-auth";
 
-const Jobs = () => {
+const Jobs = ({ session }: { session: Session }) => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [filterMenuOpen, setFilterMenuOpen] = useState<boolean>(false);
 
@@ -32,7 +33,7 @@ const Jobs = () => {
   };
 
   return (
-    <Layout scrollable>
+    <Layout scrollable session={session}>
       <FilterSideNav
         openFilter={filterMenuOpen}
         setOpenFilter={setFilterMenuOpen}
@@ -299,5 +300,7 @@ const Jobs = () => {
     </Layout>
   );
 };
+
+export { getServerSideProps };
 
 export default Jobs;

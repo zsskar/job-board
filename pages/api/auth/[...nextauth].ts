@@ -52,8 +52,19 @@ const authOptions: NextAuthOptions = {
       // If the user exists, allow sign-in
       return true;
     },
+    async jwt({ token, user }) {
+      // Add `role` to token on sign-in
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Explicitly cast `token.role` to `Role | undefined`
+      session.user.role = token.role as Role | undefined;
+      return session;
+    },
     async redirect({ url, baseUrl }) {
-      // Redirect to dashboard if user exists
       return baseUrl + "/dashboard";
     },
   },

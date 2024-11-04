@@ -8,9 +8,8 @@ import { Role } from "@prisma/client";
 
 // interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function MobileSidebar({ session }: { session: Session | null }) {
+export function MobileSidebar({ session }: { session: Session }) {
   const [open, setOpen] = useState(false);
-
   const getFilteredNavItems =
     session?.user.role === Role.USER
       ? navItems.filter((item) => item.access != "RECRUITER")
