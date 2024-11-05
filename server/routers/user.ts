@@ -187,4 +187,41 @@ export const userRouter = router({
       });
       return applications;
     }),
+
+  getDashboardData: protectedProcedure
+    .input(z.object({ email: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const { email } = input;
+
+      // Fetch jobs posted by the recruiter (if user is a recruiter)
+      const jobs = await ctx.prisma.job.findMany();
+
+      // Fetch applications by user with role 'USER' and matching email
+      const applications = await ctx.prisma.application.findMany({
+        where: {
+          user: {
+            email,
+            role: Role.USER,
+          },
+        },
+        include: {
+          job: true,
+        },
+      });
+
+      // Fetch companies and their jobs
+      const companies = await ctx.prisma.company.findMany({
+        include: {
+          jobs: true,
+        },
+      });
+
+      return {
+        dashboard: {
+          jobs,
+          applications,
+          companies,
+        },
+      };
+    }),
 });
